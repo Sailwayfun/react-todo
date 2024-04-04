@@ -8,7 +8,9 @@ const NewTodo = ({ onAddTodo }) => {
         if (!inputRef.current?.value) {
             return alert("Please enter a new todo");
         }
-        return inputRef.current.value;
+        const newTodo = inputRef.current.value;
+        inputRef.current.value = "";
+        return newTodo;
     };
 
 
