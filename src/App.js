@@ -6,10 +6,12 @@ import Container from "./components/Switch/Container";
 import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
 import NewTodo from "./components/NewTodo";
+import Search from "./components/Search";
 
 function App() {
-  const [todos, setTodos] = useState([{ id: Date.now() - 3, name: "Learn React", isDone: false }, { id: Date.now() - 2, name: "Learn Tailwind CSS", isDone: false }, { id: Date.now() - 1, name: "Learn Firebase", isDone: false }]);
+  const [todos, setTodos] = useState([]);
   const [isDoneAtBottom, setIsDoneAtBottom] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const listRef = useRef();
   const todosNumberRef = useRef();
 
@@ -21,8 +23,49 @@ function App() {
     }
   }, [todos.length]);
 
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (!storedTodos) {
+      const defaultTodos = [{ id: Date.now() - 3, name: "Learn React", isDone: false }, { id: Date.now() - 2, name: "Learn Tailwind CSS", isDone: false }, { id: Date.now() - 1, name: "Learn Firebase", isDone: false }];
+      setTodos(defaultTodos);
+      localStorage.setItem("todos", JSON.stringify(defaultTodos));
+      return;
+    }
+    setTodos(JSON.parse(storedTodos));
+  }, []);
+
+  useEffect(() => {
+    if (!searchTerm) return;
+
+    function searchTodos() {
+      const allTodos = JSON.parse(localStorage.getItem("todos"));
+      setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())));
+    }
+
+    function initTodos() {
+      const allTodos = JSON.parse(localStorage.getItem("todos"));
+      setTodos(allTodos);
+    }
+
+    function searchListner(e) {
+      if (e.key === "Enter") {
+        searchTodos();
+        setSearchTerm("");
+      }
+      if (e.key === "Escape") {
+        setSearchTerm("");
+        initTodos();
+      }
+    }
+
+    window.addEventListener("keydown", (e) => searchListner(e));
+    return () => window.removeEventListener("keydown", searchListner);
+
+  }, [searchTerm]);
+
   function addTodo(newTodo) {
     if (!newTodo) return;
+    localStorage.setItem("todos", JSON.stringify([...todos, { name: newTodo, isDone: false, id: Date.now() }]));
     setTodos([...todos, { name: newTodo, isDone: false, id: Date.now() }]);
   }
 
@@ -33,10 +76,12 @@ function App() {
       }
       return todo;
     }));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }
 
   function deleteTodo(id) {
     setTodos(todos.filter(todo => todo.id !== id));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }
 
   const progress = useMemo(() => {
@@ -58,6 +103,7 @@ function App() {
       <h1 className="text-3xl text-blue-400">
         Todo List
       </h1>
+      <Search search={ searchTerm } setSearch={ setSearchTerm } />
       <h2 className="text-gray-500">Add things to do</h2>
       <Split />
       <ProgressBar progress={ progress } />
