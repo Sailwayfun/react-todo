@@ -11,7 +11,7 @@ const Item = ({ todo, onCheck, onDelete }) => {
         <div className="flex">
             <div className={ trapezoidClasses } />
             <li className="flex-1 p-2 border-b bg-white text-blue-500 flex items-center rounded-md gap-3">
-                <CheckBox onChange={ () => onCheck(todo.id) } />
+                <CheckBox onChange={ () => onCheck(todo.id) } isChecked={ todo.isDone } />
                 <p className={ isLineThrough }>{ todo.name }</p>
                 <DeleteBtn onDelete={ () => onDelete(todo.id) } />
             </li>

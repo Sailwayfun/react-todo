@@ -8,7 +8,8 @@ import Toggle from "./components/Switch/Toggle";
 import NewTodo from "./components/NewTodo";
 
 function App() {
-  const [todos, setTodos] = useState([{ id: 0, name: "Learn React", isDone: false }, { id: 1, name: "Learn Tailwind CSS", isDone: false }, { id: 2, name: "Learn Firebase", isDone: false }]);
+  const [todos, setTodos] = useState([{ id: Date.now() - 3, name: "Learn React", isDone: false }, { id: Date.now() - 2, name: "Learn Tailwind CSS", isDone: false }, { id: Date.now() - 1, name: "Learn Firebase", isDone: false }]);
+  const [isDoneAtBottom, setIsDoneAtBottom] = useState(false);
   const listRef = useRef();
   const todosNumberRef = useRef();
 
@@ -22,7 +23,7 @@ function App() {
 
   function addTodo(newTodo) {
     if (!newTodo) return;
-    setTodos([...todos, { name: newTodo, isDone: false, id: Math.random() }]);
+    setTodos([...todos, { name: newTodo, isDone: false, id: Date.now() }]);
   }
 
   function checkTodo(id) {
@@ -43,6 +44,15 @@ function App() {
     return Math.floor((doneTodos.length / todos.length) * 100);
   }, [todos]);
 
+  function toggleTodoOrder() {
+    const updatedTodos = !isDoneAtBottom
+      ? [...todos.filter(todo => !todo.isDone), ...todos.filter(todo => todo.isDone)]
+      : [...todos.sort((a, b) => a.id - b.id)];
+
+    setTodos(updatedTodos);
+    setIsDoneAtBottom(prevOrder => !prevOrder);
+  }
+
   return (
     <Wrapper>
       <h1 className="text-3xl text-blue-300">
@@ -55,7 +65,7 @@ function App() {
       <Split />
       <Container>
         <p className="text-blue-400">Move done things to end?</p>
-        <Toggle />
+        <Toggle onToggle={ toggleTodoOrder } />
       </Container>
       <NewTodo onAddTodo={ addTodo } />
     </Wrapper>
