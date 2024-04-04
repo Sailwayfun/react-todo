@@ -1,6 +1,6 @@
 const Wrapper = ({ children }) => {
     return (
-        <div className="w-full p-10 flex flex-col justify-center bg-gradient-to-b from-blue-100 to-purple-100 overflow-y-scroll" >
+        <div className="w-full h-screen p-10 flex flex-col bg-gradient-to-b from-blue-100 to-purple-100" >
             { children }
         </div>
     );
