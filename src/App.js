@@ -55,16 +55,16 @@ function App() {
 
   return (
     <Wrapper>
-      <h1 className="text-3xl text-blue-300">
+      <h1 className="text-3xl text-blue-400">
         Todo List
       </h1>
-      <p>Add things to do</p>
+      <h2 className="text-gray-500">Add things to do</h2>
       <Split />
       <ProgressBar progress={ progress } />
       <List todos={ todos } ref={ listRef } onCheckTodo={ checkTodo } onDeleteTodo={ deleteTodo } />
       <Split />
       <Container>
-        <p className="text-blue-400">Move done things to end?</p>
+        <p className="text-gray-500">Move done things to end?</p>
         <Toggle onToggle={ toggleTodoOrder } />
       </Container>
       <NewTodo onAddTodo={ addTodo } />
