@@ -8,7 +8,7 @@ import Toggle from "./components/Switch/Toggle";
 import NewTodo from "./components/NewTodo";
 
 function App() {
-  const [todos, setTodos] = useState(["Learn React", "Learn Tailwind CSS", "Learn Firebase"]);
+  const [todos, setTodos] = useState([{ id: 0, name: "Learn React", isDone: false }, { id: 1, name: "Learn Tailwind CSS", isDone: false }, { id: 2, name: "Learn Firebase", isDone: false }]);
   const listRef = useRef();
   const todosNumberRef = useRef();
 
@@ -22,7 +22,16 @@ function App() {
 
   function addTodo(newTodo) {
     if (!newTodo) return;
-    setTodos([...todos, newTodo]);
+    setTodos([...todos, {name: newTodo, isDone: false, id: Math.random()}]);
+  }
+
+  function checkTodo(id) {
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, isDone: !todo.isDone };
+      }
+      return todo;
+    }));
   }
 
   return (
@@ -33,7 +42,7 @@ function App() {
       <p>Add things to do</p>
       <Split />
       <ProgressBar progress={ 50 } />
-      <List todos={ todos } ref={ listRef } />
+      <List todos={ todos } ref={ listRef } onCheckTodo={checkTodo}/>
       <Split />
       <Container>
         <p className="text-blue-400">Move done things to end?</p>
