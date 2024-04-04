@@ -1,3 +1,4 @@
+import ProgressBar from "./components/ProgressBar";
 import Wrapper from "./components/UI/Wrapper";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       </h1>
       <p>Add things to do</p>
       <div className="w-full h-[1px] mt-3 bg-blue-400"></div>
+      <ProgressBar progress={ 50 } />
     </Wrapper>
   );
 }
