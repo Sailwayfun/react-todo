@@ -21,6 +21,7 @@ function App() {
   }, [todos.length]);
 
   function addTodo(newTodo) {
+    if (!newTodo) return;
     setTodos([...todos, newTodo]);
   }
 
