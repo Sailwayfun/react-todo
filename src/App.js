@@ -1,7 +1,7 @@
 import ProgressBar from "./components/ProgressBar";
 import Wrapper from "./components/UI/Wrapper";
 import List from "./components/List";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Container from "./components/Switch/Container";
 import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
@@ -38,6 +38,11 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== id));
   }
 
+  const progress = useMemo(() => {
+    const doneTodos = todos.filter(todo => todo.isDone);
+    return Math.floor((doneTodos.length / todos.length) * 100);
+  }, [todos]);
+
   return (
     <Wrapper>
       <h1 className="text-3xl text-blue-300">
@@ -45,7 +50,7 @@ function App() {
       </h1>
       <p>Add things to do</p>
       <Split />
-      <ProgressBar progress={ 50 } />
+      <ProgressBar progress={ progress } />
       <List todos={ todos } ref={ listRef } onCheckTodo={ checkTodo } onDeleteTodo={ deleteTodo } />
       <Split />
       <Container>
