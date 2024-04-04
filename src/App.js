@@ -3,6 +3,7 @@ import Wrapper from "./components/UI/Wrapper";
 import List from "./components/List";
 import { useState } from "react";
 import Container from "./components/Switch/Container";
+import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
 
 function App() {
@@ -14,10 +15,10 @@ function App() {
         Todo List
       </h1>
       <p>Add things to do</p>
-      <div className="w-full h-[1px] my-4 bg-blue-400"></div>
+      <Split />
       <ProgressBar progress={ 50 } />
       <List todos={ todos } />
-      <div className="w-full h-[1px] my-4 bg-blue-400"></div>
+      <Split />
       <Container>
         <p className="text-blue-400">Move done things to end?</p>
         <Toggle />
