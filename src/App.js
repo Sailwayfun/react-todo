@@ -22,7 +22,7 @@ function App() {
 
   function addTodo(newTodo) {
     if (!newTodo) return;
-    setTodos([...todos, {name: newTodo, isDone: false, id: Math.random()}]);
+    setTodos([...todos, { name: newTodo, isDone: false, id: Math.random() }]);
   }
 
   function checkTodo(id) {
@@ -34,6 +34,10 @@ function App() {
     }));
   }
 
+  function deleteTodo(id) {
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
+
   return (
     <Wrapper>
       <h1 className="text-3xl text-blue-300">
@@ -42,7 +46,7 @@ function App() {
       <p>Add things to do</p>
       <Split />
       <ProgressBar progress={ 50 } />
-      <List todos={ todos } ref={ listRef } onCheckTodo={checkTodo}/>
+      <List todos={ todos } ref={ listRef } onCheckTodo={ checkTodo } onDeleteTodo={ deleteTodo } />
       <Split />
       <Container>
         <p className="text-blue-400">Move done things to end?</p>
