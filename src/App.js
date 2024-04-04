@@ -5,6 +5,7 @@ import { useState } from "react";
 import Container from "./components/Switch/Container";
 import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
+import NewTodo from "./components/NewTodo";
 
 function App() {
   const [todos, setTodos] = useState(["Learn React", "Learn Tailwind CSS", "Learn Firebase"]);
@@ -23,6 +24,7 @@ function App() {
         <p className="text-blue-400">Move done things to end?</p>
         <Toggle />
       </Container>
+      <NewTodo />
     </Wrapper>
   );
 }
