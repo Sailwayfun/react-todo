@@ -7,7 +7,7 @@ const Item = ({ todo }) => {
     return (
         <div className="flex">
             <div className={ trapezoidClasses } />
-            <li className="flex-1 p-2 border-b bg-white text-blue-500 flex items-center justify-between">
+            <li className="flex-1 p-2 border-b bg-white text-blue-500 flex items-center justify-between rounded-md">
                 <p>{ todo }</p>
                 <DeleteBtn />
             </li>
