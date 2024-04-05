@@ -43,12 +43,7 @@ function App() {
 
   useEffect(() => {
     if (!searchTerm) return;
-
-    // function searchTodos() {
-    //   const allTodos = JSON.parse(localStorage.getItem("todos"));
-    //   setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
-    // }
-
+    
     function initTodos() {
       const allTodos = JSON.parse(localStorage.getItem("todos"));
       setTodos(allTodos);
