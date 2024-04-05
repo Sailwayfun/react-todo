@@ -39,7 +39,7 @@ function App() {
 
     function searchTodos() {
       const allTodos = JSON.parse(localStorage.getItem("todos"));
-      setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())));
+      setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
     }
 
     function initTodos() {
@@ -86,7 +86,7 @@ function App() {
 
   const progress = useMemo(() => {
     const doneTodos = todos.filter(todo => todo.isDone);
-    return Math.floor((doneTodos.length / todos.length) * 100);
+    return Math.floor((doneTodos.length / todos.length) * 100) || 0;
   }, [todos]);
 
   function toggleTodoOrder() {
