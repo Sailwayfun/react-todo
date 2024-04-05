@@ -1,18 +1,39 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import AddIcon from "../UI/AddIcon";
 
 const NewTodo = ({ onAddTodo }) => {
 
     const inputRef = useRef();
+    const onAddTodoRef = useRef(onAddTodo);
 
     const getNewTodo = () => {
-        if (!inputRef.current?.value) {
+        if (!inputRef.current?.value?.trim()) {
             return alert("Please enter a new todo");
         }
         const newTodo = inputRef.current.value;
         inputRef.current.value = "";
         return newTodo;
     };
+
+    useEffect(() => {
+        onAddTodoRef.current = onAddTodo;
+    }, [onAddTodo]);//拆成兩個useEffect，是為了避免event listener 因為 onAddTodo 這個 function 的reference改變而重新註冊
+
+    useEffect(() => {
+        function addTodo(event) {
+            if (event.key === "Enter") {
+                const newTodo = getNewTodo();
+                if (newTodo) {
+                    onAddTodoRef.current(newTodo);
+                }
+            }
+        }
+
+        window.addEventListener("keydown", addTodo);
+
+        return () => window.removeEventListener("keydown", addTodo);
+
+    }, []);
 
 
     return (
