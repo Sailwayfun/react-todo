@@ -67,23 +67,26 @@ function App() {
 
   function addTodo(newTodo) {
     if (!newTodo) return;
-    localStorage.setItem("todos", JSON.stringify([...todos, { name: newTodo, isDone: false, id: Date.now() }]));
-    setTodos([...todos, { name: newTodo, isDone: false, id: Date.now() }]);
+    const newTodos = [...todos, { name: newTodo, isDone: false, id: Date.now() }];
+    localStorage.setItem("todos", JSON.stringify(newTodos) || JSON.stringify([]));
+    setTodos(newTodos);
   }
 
   function checkTodo(id) {
-    setTodos(todos.map(todo => {
+    const newTodos = todos.map(todo => {
       if (todo.id === id) {
         return { ...todo, isDone: !todo.isDone };
       }
       return todo;
-    }));
-    localStorage.setItem("todos", JSON.stringify(todos));
+    });
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos) || JSON.stringify([]));
   }
 
   function deleteTodo(id) {
-    setTodos(todos.filter(todo => todo.id !== id));
-    localStorage.setItem("todos", JSON.stringify(todos));
+    const newTodos = todos.filter(todo => todo.id !== id);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos) || JSON.stringify([]));
   }
 
   const progress = useMemo(() => {
