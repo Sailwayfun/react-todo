@@ -100,11 +100,7 @@ function App() {
     setIsDoneAtBottom(prevOrder => !prevOrder);
   }
 
-  function backToAllTodos(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log("backToAllTodos");
-    e.preventDefault();
+  function backToAllTodos() {
     setSearchTerm("");
     const allTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(allTodos);
