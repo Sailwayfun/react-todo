@@ -20,6 +20,7 @@ const NewTodo = ({ onAddTodo }) => {
     }, [onAddTodo]);//拆成兩個useEffect，是為了避免event listener 因為 onAddTodo 這個 function 的reference改變而重新註冊
 
     useEffect(() => {
+        const inputNode = inputRef.current;
         function addTodo(event) {
             if (event.key === "Enter") {
                 const newTodo = getNewTodo();
@@ -29,9 +30,9 @@ const NewTodo = ({ onAddTodo }) => {
             }
         }
 
-        window.addEventListener("keydown", addTodo);
+        inputNode.addEventListener("keydown", addTodo);
 
-        return () => window.removeEventListener("keydown", addTodo);
+        return () => inputNode.removeEventListener("keydown", addTodo);
 
     }, []);
 
