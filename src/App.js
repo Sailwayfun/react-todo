@@ -1,7 +1,7 @@
 import ProgressBar from "./components/ProgressBar";
 import Wrapper from "./components/UI/Wrapper";
 import List from "./components/List";
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Container from "./components/Switch/Container";
 import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
@@ -34,13 +34,20 @@ function App() {
     setTodos(JSON.parse(storedTodos));
   }, []);
 
+  const searchTodos = useCallback(() => {
+    if (!searchTerm) return;
+    const allTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
+  }, [searchTerm]);
+
+
   useEffect(() => {
     if (!searchTerm) return;
 
-    function searchTodos() {
-      const allTodos = JSON.parse(localStorage.getItem("todos"));
-      setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
-    }
+    // function searchTodos() {
+    //   const allTodos = JSON.parse(localStorage.getItem("todos"));
+    //   setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
+    // }
 
     function initTodos() {
       const allTodos = JSON.parse(localStorage.getItem("todos"));
@@ -61,7 +68,7 @@ function App() {
     window.addEventListener("keydown", (e) => searchListner(e));
     return () => window.removeEventListener("keydown", searchListner);
 
-  }, [searchTerm]);
+  }, [searchTerm, searchTodos]);
 
   function addTodo(newTodo) {
     if (!newTodo) return;
@@ -103,7 +110,7 @@ function App() {
       <h1 className="text-3xl text-blue-400">
         Todo List
       </h1>
-      <Search search={ searchTerm } setSearch={ setSearchTerm } />
+      <Search search={ searchTerm } setSearch={ setSearchTerm } onSearch={ searchTodos } />
       <h2 className="text-gray-500">Add things to do</h2>
       <Split />
       <ProgressBar progress={ progress } />
