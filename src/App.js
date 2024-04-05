@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const storedTodos = localStorage.getItem("todos");
     if (!storedTodos) {
-      const defaultTodos = [{ id: Date.now() - 3, name: "Learn React", isDone: false }, { id: Date.now() - 2, name: "Learn Tailwind CSS", isDone: false }, { id: Date.now() - 1, name: "Learn Firebase", isDone: false }];
+      const defaultTodos = [{ id: Date.now() - 4, name: "Learn Git", isDone: false }, { id: Date.now() - 3, name: "Learn React", isDone: false }, { id: Date.now() - 2, name: "Learn Tailwind CSS", isDone: false }, { id: Date.now() - 1, name: "Learn Firebase", isDone: false }];
       setTodos(defaultTodos);
       localStorage.setItem("todos", JSON.stringify(defaultTodos));
       return;
