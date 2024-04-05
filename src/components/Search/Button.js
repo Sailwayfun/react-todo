@@ -1,15 +1,28 @@
 import SearchIcon from "../UI/SearchIcon";
-import BackIcon from "../UI/BackIcon";
+import BackButton from "../UI/BackIcon";
 
-const Button = ({ onSearch, isSearching }) => {
+const Button = ({ onSearch, isSearching, onBackToAllTodos }) => {
     return (
-        <button
-            onClick={ onSearch }
-            className="w-12 h-6 absolute top-1 right-1 flex gap-3"
-        >
-            <SearchIcon />
-            { isSearching ? <BackIcon /> : null }
-        </button>
+        <div className="flex gap-3 absolute h-6 top-1 right-5">
+            <button
+                onClick={ (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onSearch();
+                    console.log("searching");
+                } }
+                className="w-full h-full"
+            >
+                <SearchIcon />
+            </button>
+            { isSearching ? <BackButton backToAllTodos={ (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onBackToAllTodos();
+                console.log("backToAllTodos");
+            } } /> : null }
+        </div>
+
     );
 };
 

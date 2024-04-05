@@ -43,7 +43,7 @@ function App() {
 
   useEffect(() => {
     if (!searchTerm) return;
-    
+
     function initTodos() {
       const allTodos = JSON.parse(localStorage.getItem("todos"));
       setTodos(allTodos);
@@ -100,12 +100,22 @@ function App() {
     setIsDoneAtBottom(prevOrder => !prevOrder);
   }
 
+  function backToAllTodos(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log("backToAllTodos");
+    e.preventDefault();
+    setSearchTerm("");
+    const allTodos = JSON.parse(localStorage.getItem("todos"));
+    setTodos(allTodos);
+  }
+
   return (
     <Wrapper>
       <h1 className="text-3xl text-blue-400">
         Todo List
       </h1>
-      <Search search={ searchTerm } setSearch={ setSearchTerm } onSearch={ searchTodos } />
+      <Search search={ searchTerm } setSearch={ setSearchTerm } onSearch={ searchTodos } onBackToAllTodos={ backToAllTodos } />
       <h2 className="text-gray-500">Add things to do</h2>
       <Split />
       <ProgressBar progress={ progress } />
