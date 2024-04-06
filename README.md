@@ -1,70 +1,24 @@
-# Getting Started with Create React App
+# 如何執行程式
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. git clone https://github.com/Sailwayfun/react-todo.git
+2. npm install
+3. npm start
+4. 開啟 localhost://3000
 
-## Available Scripts
+# 操作說明
 
-In the project directory, you can run:
+1. 新增 Todo：在網頁下方的輸入框輸入新的 Todo 項目（不限中英文），按下鍵盤的 Enter 鍵或以滑鼠點擊輸入框右邊的 + 按鈕，即可新增至 Todo List 最下方。
 
-### `npm start`
+2. 勾選 Todo：在每個 Todo 元件上都會有一個 checkbox，勾選即表示該事項已經完成，會在文字上方劃上刪除線。
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. 切換排序：在 Move done things to end? 文字旁邊有個可切換的按鈕，開啟時，會將已完成的事項排序至列表的最下方，若關閉則會恢復以建立時間排序 Todos。
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+4. 刪除 Todo：在每個 Todo 元件上右邊會有一個 X 按鈕，點擊可刪除該事項。
 
-### `npm test`
+5. 搜尋 Todo：網頁右上方有搜尋輸入框，可輸入中文或英文，下方列表便會列出符合搜尋文字的 Todos。
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 其他功能
 
-### `npm run build`
+1. 資料庫：Todo 資料存在瀏覽器的 LocalStorage，因此重整畫面不會丟失資料。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+2. 進度條：計算已完成的 Todos 佔所有 Todos 的比例，並以進度條做視覺化。
