@@ -29,5 +29,6 @@ const _Search = ({ search, setSearch, onSearch, onBackToAllTodos, onCompositionS
 };
 
 const Search = forwardRef(_Search);
+//這裡使用forwardRef，是為了讓Search component可以接收ref，這樣就可以在父層component中監聽Search component的keydown事件
 
 export default Search;
