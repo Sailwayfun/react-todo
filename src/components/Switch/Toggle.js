@@ -7,4 +7,6 @@ const Toggle = ({ onToggle }) => {
     );
 };
 
+//這裡使用了tailwindcss的before和peer，before是用來設定slider的樣式，peer是siblings selector，用來選取同一個parent的其他element，我使用checkbox的勾選與否來控制slider的樣式
+
 export default Toggle;
