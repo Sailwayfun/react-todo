@@ -15,6 +15,8 @@ function App() {
   const listRef = useRef();
   const todosNumberRef = useRef();
   const searchRef = useRef();
+  const justAddedRef = useRef(false);
+  //ref跟state的選擇，差別在於是否需要更新UI，如果只是需要存取DOM元素或儲存數值，就使用ref，如果需要更新UI，就使用state
 
   const setTodos = useCallback((newTodos) => {
     if (isDoneAtBottom) {
@@ -35,10 +37,13 @@ function App() {
 
   useEffect(() => {
     todosNumberRef.current = todos.length;
-    if (listRef.current) {
+    if (listRef.current && justAddedRef.current) {
       listRef.current.lastChild?.scrollIntoView({ behavior: "smooth" });
+      justAddedRef.current = false;
     }
   }, [todos.length]);
+  //這裡的useEffect是為了在新增todo時，自動捲動到新增的todo，這樣使用者就不用自己滾動畫面
+  //這裡使用justAddedRef.current是為了避免畫面重整和刪除todo時也會觸發scrollIntoView
 
   useEffect(() => {
     const storedTodos = localStorage.getItem("todos");
@@ -88,6 +93,7 @@ function App() {
     if (!newTodo) return;
     const newTodos = [...todos, { name: newTodo, isDone: false, id: Date.now() }];
     localStorage.setItem("todos", JSON.stringify(newTodos) || JSON.stringify([]));
+    justAddedRef.current = true;
     setTodos(newTodos);
   }
 
