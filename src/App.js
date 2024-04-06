@@ -55,12 +55,15 @@ function App() {
     }
     setTodos(JSON.parse(storedTodos));
   }, [setTodos]);
+  //這個side effect是為了初始化todos，如果localStorage裡面沒有todos，就會新增一些預設的todos
 
   const searchTodos = useCallback(() => {
     if (!searchTerm) return;
     const allTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
   }, [searchTerm, setTodos]);
+  //search功能分成按鈕和鍵盤兩種，都會使用到這個callback function，這樣就不用重複寫相同的邏輯
+  //用useCallback包裝，是為了避免每次render都會重新建立這個function
 
 
   useEffect(() => {
@@ -86,6 +89,7 @@ function App() {
 
     searchNode.addEventListener("keydown", (e) => searchListner(e));
     return () => searchNode.removeEventListener("keydown", searchListner);
+    //這裡選擇在search input而不是window上加上event listener，是為了避免在其他地方按下enter或esc也會觸發searchTodos
 
   }, [searchTerm, searchTodos, setTodos]);
 
@@ -118,10 +122,12 @@ function App() {
     const doneTodos = todos.filter(todo => todo.isDone);
     return Math.floor((doneTodos.length / todos.length) * 100) || 0;
   }, [todos]);
+  //這裡使用useMemo，是為了避免每次render都會重新計算進度條的進度，這樣可以節省效能
 
   function toggleTodoOrder() {
     setIsDoneAtBottom(prevOrder => !prevOrder);
   }
+  //因為todos的順序是由isDoneAtBottom來控制，所以只要改變這個state，就可以改變todos的順序
 
   function backToAllTodos() {
     setSearchTerm("");
