@@ -1,4 +1,4 @@
-const Container = ({ children }) => {
+const Switch = ({ children }) => {
     return (
         <div className="flex justify-end gap-4 items-center">
             { children }
@@ -6,4 +6,4 @@ const Container = ({ children }) => {
     );
 };
 
-export default Container;
+export default Switch;

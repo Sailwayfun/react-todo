@@ -2,7 +2,7 @@ import ProgressBar from "./components/ProgressBar";
 import Wrapper from "./components/UI/Wrapper";
 import List from "./components/List";
 import { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import Container from "./components/Switch/Container";
+import Switch from "./components/Switch";
 import Split from "./components/UI/Split";
 import Toggle from "./components/Switch/Toggle";
 import NewTodo from "./components/NewTodo";
@@ -153,10 +153,10 @@ function App() {
       <ProgressBar progress={ progress } />
       <List todos={ todos } ref={ listRef } onCheckTodo={ checkTodo } onDeleteTodo={ deleteTodo } />
       <Split />
-      <Container>
+      <Switch>
         <p className="text-gray-500">Move done things to end?</p>
         <Toggle onToggle={ toggleTodoOrder } />
-      </Container>
+      </Switch>
       <NewTodo
         onAddTodo={ addTodo }
         onCompositionStart={ () => setIsComposing(true) }
