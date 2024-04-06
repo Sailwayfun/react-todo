@@ -1,5 +1,10 @@
 # 如何執行程式
 
+## 已部署至
+https://react-todo-kxa7.onrender.com/
+
+## 本地執行
+
 1. git clone https://github.com/Sailwayfun/react-todo.git
 2. npm install
 3. npm start
