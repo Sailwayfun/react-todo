@@ -14,10 +14,12 @@ const NewTodo = ({ onAddTodo }) => {
         inputRef.current.value = "";
         return newTodo;
     };
+    //這裡在新增todos做簡單的驗證，如果input是空的，就會alert使用者，並且不會新增todo
 
     useEffect(() => {
         onAddTodoRef.current = onAddTodo;
-    }, [onAddTodo]);//拆成兩個useEffect，是為了避免event listener 因為 onAddTodo 這個 function 的reference改變而重新註冊
+    }, [onAddTodo]);
+    //拆成兩個useEffect，是為了避免event listener 因為 onAddTodo 這個 function 的reference改變而重新註冊
 
     useEffect(() => {
         const inputNode = inputRef.current;
@@ -35,6 +37,7 @@ const NewTodo = ({ onAddTodo }) => {
         return () => inputNode.removeEventListener("keydown", addTodo);
 
     }, []);
+    //第二個side effect，用來監聽input的keydown事件，當按下Enter鍵時，就會新增一個todo
 
 
     return (
