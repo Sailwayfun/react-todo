@@ -9,12 +9,27 @@ import NewTodo from "./components/NewTodo";
 import Search from "./components/Search";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, _setTodos] = useState([]);
   const [isDoneAtBottom, setIsDoneAtBottom] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const listRef = useRef();
   const todosNumberRef = useRef();
   const searchRef = useRef();
+
+  const setTodos = useCallback((newTodos) => {
+    if (isDoneAtBottom) {
+      const doneTodos = newTodos.filter(todo => todo.isDone);
+      const notDoneTodos = newTodos.filter(todo => !todo.isDone);
+      _setTodos([...notDoneTodos, ...doneTodos]);
+      return;
+    }
+    _setTodos(newTodos);
+    return;
+  }, [
+    isDoneAtBottom,
+  ]);
+  //之所以不直接使用_setTodos，是因為這樣可以在setTodos裡面加入邏輯，例如isDoneAtBottom的判斷
+  //每次呼叫setTodos，都會檢查isDoneAtBottom的值，如果是true，就會把已完成的todo移到陣列最後面，否則就維持原本的順序
 
 
   useEffect(() => {
@@ -33,13 +48,13 @@ function App() {
       return;
     }
     setTodos(JSON.parse(storedTodos));
-  }, []);
+  }, [setTodos]);
 
   const searchTodos = useCallback(() => {
     if (!searchTerm) return;
     const allTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
-  }, [searchTerm]);
+  }, [searchTerm, setTodos]);
 
 
   useEffect(() => {
@@ -66,7 +81,7 @@ function App() {
     searchNode.addEventListener("keydown", (e) => searchListner(e));
     return () => searchNode.removeEventListener("keydown", searchListner);
 
-  }, [searchTerm, searchTodos]);
+  }, [searchTerm, searchTodos, setTodos]);
 
   function addTodo(newTodo) {
     if (!newTodo) return;
@@ -98,11 +113,6 @@ function App() {
   }, [todos]);
 
   function toggleTodoOrder() {
-    const updatedTodos = !isDoneAtBottom
-      ? [...todos.filter(todo => !todo.isDone), ...todos.filter(todo => todo.isDone)]
-      : [...todos.sort((a, b) => a.id - b.id)];
-
-    setTodos(updatedTodos);
     setIsDoneAtBottom(prevOrder => !prevOrder);
   }
 
