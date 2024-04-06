@@ -23,7 +23,8 @@ function App() {
       _setTodos([...notDoneTodos, ...doneTodos]);
       return;
     }
-    _setTodos(newTodos);
+    const todosByTime = newTodos.sort((a, b) => a.id - b.id);
+    _setTodos(todosByTime);
     return;
   }, [
     isDoneAtBottom,
