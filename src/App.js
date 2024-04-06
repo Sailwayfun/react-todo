@@ -80,7 +80,6 @@ function App() {
     function searchListner(e) {
       if (e.key === "Enter") {
         searchTodos();
-        setSearchTerm("");
       }
       if (e.key === "Escape") {
         setSearchTerm("");
