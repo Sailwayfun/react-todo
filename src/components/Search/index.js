@@ -8,6 +8,7 @@ const _Search = ({ search, setSearch, onSearch, onBackToAllTodos, onCompositionS
     function focusSearchInput() {
         setIsSearching(true);
     }
+    //Search component在focus的時候，會顯示SearchIcon和BackIcon，這個功能是透過focusSearchInput來控制的
 
     return (
         <div className="flex justify-end relative">
