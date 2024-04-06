@@ -15,5 +15,7 @@ const _List = (props, ref) => {
 };
 
 const List = forwardRef(_List);
+//這個component是用來顯示所有的todo，所以會接收一個todos的props，然後把每個todo傳給Item component
+//這裡使用forwardRef，是為了讓List component可以接收ref，然後再傳遞給ul element，這樣可以在父層component中控制List component的scroll位置
 
 export default List;
