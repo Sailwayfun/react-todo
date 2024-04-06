@@ -12,6 +12,7 @@ function App() {
   const [todos, _setTodos] = useState([]);
   const [isDoneAtBottom, setIsDoneAtBottom] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
   const listRef = useRef();
   const todosNumberRef = useRef();
   const searchRef = useRef();
@@ -58,10 +59,10 @@ function App() {
   //這個side effect是為了初始化todos，如果localStorage裡面沒有todos，就會新增一些預設的todos
 
   const searchTodos = useCallback(() => {
-    if (!searchTerm) return;
+    if (!searchTerm || isComposing) return;
     const allTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(allTodos.filter(todo => todo.name.toLowerCase().includes(searchTerm.toLowerCase())) || []);
-  }, [searchTerm, setTodos]);
+  }, [searchTerm, setTodos, isComposing]);
   //search功能分成按鈕和鍵盤兩種，都會使用到這個callback function，這樣就不用重複寫相同的邏輯
   //用useCallback包裝，是為了避免每次render都會重新建立這個function
 
@@ -94,7 +95,7 @@ function App() {
   }, [searchTerm, searchTodos, setTodos]);
 
   function addTodo(newTodo) {
-    if (!newTodo) return;
+    if (!newTodo || isComposing) return;
     const newTodos = [...todos, { name: newTodo, isDone: false, id: Date.now() }];
     localStorage.setItem("todos", JSON.stringify(newTodos) || JSON.stringify([]));
     justAddedRef.current = true;
@@ -140,7 +141,14 @@ function App() {
       <h1 className="text-3xl text-blue-400">
         Todo List
       </h1>
-      <Search search={ searchTerm } setSearch={ setSearchTerm } onSearch={ searchTodos } onBackToAllTodos={ backToAllTodos } ref={ searchRef } />
+      <Search search={ searchTerm }
+        setSearch={ setSearchTerm }
+        onSearch={ searchTodos }
+        onBackToAllTodos={ backToAllTodos }
+        ref={ searchRef }
+        onCompositionStart={ () => setIsComposing(true) }
+        onCompositionEnd={ () => setIsComposing(false) }
+      />
       <h2 className="text-gray-500">Add things to do</h2>
       <Split />
       <ProgressBar progress={ progress } />
@@ -150,7 +158,11 @@ function App() {
         <p className="text-gray-500">Move done things to end?</p>
         <Toggle onToggle={ toggleTodoOrder } />
       </Container>
-      <NewTodo onAddTodo={ addTodo } />
+      <NewTodo
+        onAddTodo={ addTodo }
+        onCompositionStart={ () => setIsComposing(true) }
+        onCompositionEnd={ () => setIsComposing(false) }
+      />
     </Wrapper>
   );
 }
